@@ -2,10 +2,12 @@ package com.api.Service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.api.UsuarioRepository.CarrinhoRepository;
 import com.api.UsuarioRepository.CategoriaRepository;
 import com.api.UsuarioRepository.ProdutoRepository;
 import com.api.modelos.Categoria;
@@ -13,14 +15,15 @@ import com.api.modelos.Produto;
 
 @Service
 public class ProdutoService {
+	
+	@Autowired
+    private ProdutoRepository repository;
+	@Autowired
+    private  CategoriaRepository categoriasRepository;
+	@Autowired
+    private  CarrinhoRepository carrinhoRepository;
 
-    private final ProdutoRepository repository;
-    private final CategoriaRepository categoriasRepository;
-
-    public ProdutoService(ProdutoRepository repository, CategoriaRepository categoriasRepository) {
-        this.repository = repository;
-        this.categoriasRepository = categoriasRepository;
-    }
+  
 
     public Produto salvar(Produto produto) {
         if (produto.getDescricao() == null || produto.getDescricao().isEmpty()) {
@@ -56,6 +59,7 @@ public class ProdutoService {
 
     public ResponseEntity<String> deletar(Long id) {
         if (repository.existsById(id)) {
+        	carrinhoRepository.deleteByProdutoId(id);
             repository.deleteById(id);
             return ResponseEntity.ok("Produto removido");
         } else {

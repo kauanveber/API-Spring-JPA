@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.api.Service.CategoriaService;
 import com.api.Service.PedidoService;
 import com.api.modelos.Categoria;
 import com.api.modelos.Pedido;
 
-@Controller
+@RestController
 @RequestMapping("/pedido")
 public class PedidoController {
 	private PedidoService service;
